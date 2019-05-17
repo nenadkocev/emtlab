@@ -24,6 +24,7 @@ import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -41,7 +42,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     void init(){
         Role user = new Role();
         user.setRole("ROLE_USER");
+        Role role2 = new Role();
+        role2.setRole("ROLE_EMPLOYEE");
+        Role role3 = new Role();
+        role3.setRole("ROLE_ADMIN");
+        Role role4 = new Role();
+        role4.setRole("ROLE_MANAGER");
         roleRepository.save(user);
+        roleRepository.save(role2);
+        roleRepository.save(role3);
+        roleRepository.save(role4);
     }
 
     public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, ActivationTokenRepository activationTokenRepository, EmailService emailService, PasswordEncoder passwordEncoder, PasswordGenerator passwordGenerator) {
@@ -185,5 +195,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 }

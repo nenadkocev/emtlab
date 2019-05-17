@@ -45,6 +45,11 @@ public class UserController {
         response.sendRedirect("/login");
     }
 
+    @RequestMapping(value = "/login")
+    public String login(){
+        return "user/login";
+    }
+
     @PostMapping(value = "/index")
     public String index(@ModelAttribute("user") User newUser, Authentication authentication, Model model) throws NotAuthenticatedException {
         if(authentication == null || !authentication.isAuthenticated())
@@ -79,7 +84,7 @@ public class UserController {
         User user = userService.findByUserEmail(authentication.getName());
         userService.changePassword(user, oldPassword, newPassword);
         authentication.setAuthenticated(false);
-        return "user/index";
+        return "user/login";
     }
 
     @RequestMapping(value = "/forgotpassword")

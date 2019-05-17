@@ -32,8 +32,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .formLogin()
+                .loginPage("/user/login")
                 .failureUrl("/login?error=true")
                 .defaultSuccessUrl("/user/index", true)
+                .and()
+                .rememberMe()
                 .and()
                 .authorizeRequests()
                 .antMatchers("/user/index*").hasRole("USER")

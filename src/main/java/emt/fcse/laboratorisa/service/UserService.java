@@ -6,6 +6,8 @@ import emt.fcse.laboratorisa.Model.Exception.WrongCredentialsException;
 import emt.fcse.laboratorisa.Model.User;
 import emt.fcse.laboratorisa.Model.dto.UserDto;
 
+import java.util.List;
+
 public interface UserService {
 
     User registerNewUser(UserDto userDto) throws UserAlreadyExistsException;
@@ -23,4 +25,6 @@ public interface UserService {
     User updateUserAccount(User newUser, User oldUser) throws UserNotFoundException, UserAlreadyExistsException;
 
     void changePassword(User user, String oldPassword, String newPassword);
+
+    List<User> getAllUsers();
 }
