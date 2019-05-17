@@ -17,4 +17,10 @@ public interface UserService {
     User login(String email, String password) throws UserNotFoundException, WrongCredentialsException;
 
     void forgotPassword(String email) throws UserNotFoundException;
+
+    User findByUserEmail(String email) throws UserNotFoundException;
+
+    User updateUserAccount(User newUser, User oldUser) throws UserNotFoundException, UserAlreadyExistsException;
+
+    void changePassword(User user, String oldPassword, String newPassword);
 }

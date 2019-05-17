@@ -1,4 +1,4 @@
-package emt.fcse.laboratorisa.service;
+package emt.fcse.laboratorisa.service.Impl;
 
 import emt.fcse.laboratorisa.Model.ActivationToken;
 import emt.fcse.laboratorisa.Model.Exception.TokenExpiredOrNonExisting;
@@ -11,7 +11,11 @@ import emt.fcse.laboratorisa.Model.dto.UserDto;
 import emt.fcse.laboratorisa.repository.ActivationTokenRepository;
 import emt.fcse.laboratorisa.repository.RoleRepository;
 import emt.fcse.laboratorisa.repository.UserRepository;
+import emt.fcse.laboratorisa.service.EmailService;
+import emt.fcse.laboratorisa.service.UserService;
 import emt.fcse.laboratorisa.util.PasswordGenerator;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,10 +25,9 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -37,7 +40,7 @@ public class UserServiceImpl implements UserService {
     @PostConstruct
     void init(){
         Role user = new Role();
-        user.setRole("USER");
+        user.setRole("ROLE_USER");
         roleRepository.save(user);
     }
 
@@ -68,16 +71,16 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
-        user.setRoles(new HashSet<>(Arrays.asList(roleRepository.findByRole("USER"))));
+        user.setRoles(new HashSet<>(Arrays.asList(roleRepository.findByRole("ROLE_USER"))));
 
         token.setUser(user);
 
         userRepository.save(user);
 
-//        emailService.sendSimpleMessage(user.getEmail(),
-//                "Activate your account",
-//                "In order to complete your registration, you need to activate your account. Click on http://www.localhost:8080/user/activate?token=" + token.getToken());
-        System.out.println("Registered user " + user.getEmail() + " with token " + token.getToken());
+        emailService.sendSimpleMessage(user.getEmail(),
+                "Activate your account",
+                "In order to complete your registration, you need to activate your account. Click on http://www.localhost:8080/user/activate?token=" + token.getToken());
+        System.out.println("Registered user " + user.getEmail() + " with password " + user.getPassword() +  " and with token " + token.getToken());
         return user;
     }
 
@@ -133,5 +136,54 @@ public class UserServiceImpl implements UserService {
                 "Password change",
                 "You requested password change, your new generated password is " + newPassword
         );
+    }
+
+    @Override
+    public User findByUserEmail(String email) throws UserNotFoundException {
+        if(email == null)
+            throw new UserNotFoundException();
+
+        User user = userRepository.findByEmail(email);
+        if(user == null)
+            throw new UserNotFoundException();
+
+        return user;
+    }
+
+    @Override
+    public User updateUserAccount(User newUser, User oldUser) throws UserAlreadyExistsException, UserNotFoundException {
+
+        //  check if user's new email is not taken by some other user
+        User existingUser = userRepository.findByEmail(newUser.getEmail());
+        if(existingUser != null && !oldUser.getId().equals(existingUser.getId()))
+            throw new UserAlreadyExistsException();
+
+        oldUser.setLastName(newUser.getLastName());
+        oldUser.setFirstName(newUser.getFirstName());
+        oldUser.setEmail(newUser.getEmail());
+        userRepository.save(oldUser);
+
+        return oldUser;
+    }
+
+
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(s);
+        if(user == null)
+            throw new UserNotFoundException();
+        return user;
+    }
+
+    @Override
+    public void changePassword(User user, String oldPassword, String newPassword) throws WrongCredentialsException {
+        if(!passwordEncoder.matches(oldPassword, user.getPassword()))
+            throw new WrongCredentialsException();
+
+        if(newPassword == null || newPassword.trim().length() == 0)
+            throw new WrongCredentialsException();
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
     }
 }

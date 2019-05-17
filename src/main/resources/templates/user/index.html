@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+<body>
+    <div class="container">
+        <form method="post" th:object="${user}" enctype="utf8">
+            <label for="email">Електронска пошта:</label>
+            <input type="email" th:field="*{email}" th:value="${user.email}" id="email">
+
+            <label for="firstName">Име: </label>
+            <input id="firstName" type="text" th:field="*{firstName}" th:value="${user.firstName}">
+
+            <label for="lastName">Презиме: </label>
+            <input id="lastName" type="text" th:field="*{lastName}" th:value="${user.lastName}">
+
+            <input type="submit" value="Зачувај">
+        </form>
+        <a href="/user/changepassword">Промени лозинка</a>
+    </div>
+</body>
+</html>

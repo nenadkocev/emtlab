@@ -36,20 +36,20 @@ class UserServiceTest {
     @Mock
     private PasswordEncoder passwordEncoder;
 
-    @BeforeEach
-    public void setUp(){
-        MockitoAnnotations.initMocks(this);
-
-        passwordGenerator = new PasswordGenerator.PasswordGeneratorBuilder()
-                .useDigits(true)
-                .useLower(true)
-                .useUpper(true)
-                .usePunctuation(true)
-                .build();
-
-        emailService = new EmailServiceImpl();
-        userService = new UserServiceImpl(userRepository, roleRepository, activationTokenRepository, emailService, passwordEncoder, passwordGenerator);
-    }
+//    @BeforeEach
+//    public void setUp(){
+//        MockitoAnnotations.initMocks(this);
+//
+//        passwordGenerator = new PasswordGenerator.PasswordGeneratorBuilder()
+//                .useDigits(true)
+//                .useLower(true)
+//                .useUpper(true)
+//                .usePunctuation(true)
+//                .build();
+//
+//        emailService = new EmailServiceImpl();
+//        userService = new UserServiceImpl(userRepository, roleRepository, activationTokenRepository, emailService, passwordEncoder, passwordGenerator);
+//    }
 
     @Test
     @DisplayName("UserRegistrationAndActivationTest")
