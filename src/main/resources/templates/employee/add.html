@@ -3,14 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Додади нов вработен</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.css">
 </head>
 <body>
-    <div class="container">
+<div class="container" style="padding-left: 300px; padding-right: 300px; padding-top: 50px; padding-bottom: 100px">
         <form method="post">
-            <label>Електронска пошта на корисник: </label>
-            <input type="email" name="email">
-            <input type="submit" value="Додади">
+            <div class="form-group">
+                <label for="email" class="col-form-label">Електронска пошта на корисник: </label>
+                <input class="form-control" id="email" type="email" name="email">
+            </div>
+            <input class="btn btn-success" type="submit" value="Додади">
         </form>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/esm/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -26,8 +27,8 @@ public class User implements UserDetails {
 
     private Boolean enabled;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
-    private Set<Role> roles;
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    private Set<Role> roles = new HashSet<>();
 
     @OneToOne(mappedBy = "user",
             cascade = CascadeType.ALL, orphanRemoval = true)
@@ -129,5 +130,11 @@ public class User implements UserDetails {
 
     public void setActivationToken(ActivationToken activationToken) {
         this.activationToken = activationToken;
+    }
+
+    public void addRole(Role role){
+        if(roles.contains(role))
+            return;
+        roles.add(role);
     }
 }

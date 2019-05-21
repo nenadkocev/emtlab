@@ -2,23 +2,38 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Index</title>
+    <title>Профил</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.css">
 </head>
 <body>
-    <div class="container">
-        <form method="post" th:object="${user}" enctype="utf8">
-            <label for="email">Електронска пошта:</label>
-            <input type="email" th:field="*{email}" th:value="${user.email}" id="email">
+<div class="container" style="padding-left: 300px; padding-right: 300px; padding-top: 50px; padding-bottom: 100px">
+    <h3>
+        Уреди профил:
+    </h3>
+    <form method="post" th:object="${user}" enctype="utf8" style="margin-bottom: 20px;">
+            <div class="form-group">
+                <label class="col-form-label" for="email">Електронска пошта:</label>
+                <input class="form-control" type="email" th:field="*{email}" th:value="${user.email}" id="email">
+            </div>
 
-            <label for="firstName">Име: </label>
-            <input id="firstName" type="text" th:field="*{firstName}" th:value="${user.firstName}">
+            <div class="form-group">
+                <label class="col-form-label" for="firstName">Име: </label>
+                <input class="form-control" id="firstName" type="text" th:field="*{firstName}" th:value="${user.firstName}">
+            </div>
 
-            <label for="lastName">Презиме: </label>
-            <input id="lastName" type="text" th:field="*{lastName}" th:value="${user.lastName}">
+            <div class="form-group">
+                <label class="col-form-label" for="lastName">Презиме: </label>
+                <input class="form-control" id="lastName" type="text" th:field="*{lastName}" th:value="${user.lastName}">
+            </div>
 
-            <input type="submit" value="Зачувај">
+            <input class="btn btn-info" type="submit" value="Зачувај">
         </form>
-        <a href="/user/changepassword">Промени лозинка</a>
+        <a class="btn btn-secondary" href="/user/changepassword">Промени лозинка</a>
     </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/esm/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>

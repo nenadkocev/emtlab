@@ -20,4 +20,8 @@ public interface EmployeeService {
     void removeEmployee(String employeeEmail);
 
     Employee makeUserEmployee(User user);
+
+    void removeEmployee(Long id);
+
+    Employee updateEmployee(String oldEmail, String newEmail, String firstName, String lastName, String managerEmail);
 }

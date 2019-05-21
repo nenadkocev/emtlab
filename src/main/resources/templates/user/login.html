@@ -3,23 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>Најава</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.css">
 </head>
 <body>
-    <div class="container">
+<div class="container" style="padding-left: 300px; padding-right: 300px; padding-top: 50px; padding-bottom: 100px">
         <h1>Најави се</h1>
         <form method="post" action="login">
 
-            <label for="email">Електронска пошта: </label>
-            <input id="email" type="email" name="username">
 
-            <label for="password">Лозинка: </label>
-            <input id="password" type="password" name="password">
+            <div class="form-group">
+                <label class="col-form-label" for="email">Електронска пошта: </label>
+                <input class="form-control" id="email" type="email" name="username">
+            </div>
 
-            <label for="rememberme">Запомни ме: </label>
-            <input id="rememberme" type="checkbox" value="true" name="remember-me">
 
-            <input type="submit" value="Најави се">
+            <div class="form-group">
+                <label class="col-form-label" for="password">Лозинка: </label>
+                <input class="form-control" id="password" type="password" name="password">
+            </div>
+
+            <div class="form-group">
+                <label class="form-check-label" for="rememberme">Запомни ме: </label>
+                <input class="form-check-inline" id="rememberme" type="checkbox" value="true" name="remember-me">
+            </div>
+
+            <input class="btn btn-info" type="submit" value="Најави се">
         </form>
     </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/esm/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>

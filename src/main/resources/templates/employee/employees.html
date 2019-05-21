@@ -3,15 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <title>Вработени</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.css">
 </head>
 <body>
     <div class="container">
-        <table class="table">
+
+        <div class="card m-2">
+            <div class="card-body" style="background: rgba(0, 0, 0, .03)">
+                <h3>Уреди вработен</h3>
+                <form method="post" action="/editemployee">
+                    <div class="form-group">
+                        <label for="oldemail" class="col-form-label">Стара електронска пошта на вработен: </label>
+                        <input id="oldemail" class="form-control" type="email" name="oldemail">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="newemail" class="col-form-label">Нова електронска пошта</label>
+                        <input id="newemail" class="form-control" type="email" name="newemail">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="firstname" class="col-form-label">Име на вработен</label>
+                        <input id="firstname" name="firstname" class="form-control" type="text">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastname" class="col-form-label">Презиме на вработен</label>
+                        <input id="lastname" name="lastname" class="form-control" type="text">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="manageremail" class="col-form-label">Електронска пошта за менаџерот на вработениот</label>
+                        <input id="manageremail" name="manageremail" class="form-control" type="email">
+                    </div>
+                    <input type="submit" class="btn btn-warning" value="Промени вработен">
+                </form>
+            </div>
+        </div>
+
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th>Име</th>
                     <th>Презиме</th>
                     <th>Електронска пошта</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -19,9 +56,16 @@
                     <td th:text="${employee.firstName}"></td>
                     <td th:text="${employee.lastName}"></td>
                     <td th:text="${employee.email}"></td>
+                    <td>
+                        <a th:href="@{'/removeemployee/' + ${employee.id}}">Избриши</a>
+                    </td>
                 </tr>
             </tbody>
         </table>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/esm/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>

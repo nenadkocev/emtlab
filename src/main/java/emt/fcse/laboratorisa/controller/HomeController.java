@@ -11,6 +11,7 @@ import emt.fcse.laboratorisa.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,6 +36,23 @@ public class HomeController {
     @RequestMapping(value = "addEmployee")
     public String addEmployee(){
         return "employee/add";
+    }
+
+    @PostMapping(value = "/editemployee")
+    public String editEmployee(@RequestParam(name = "oldemail") String oldEmail,
+                             @RequestParam(name = "newemail") String newemail,
+                             @RequestParam(name = "firstname") String firstname,
+                             @RequestParam(name = "lastname") String lastname,
+                             @RequestParam(name = "manageremail") String manageremail){
+        Employee employee = employeeService.updateEmployee(oldEmail, newemail, firstname, lastname, manageremail);
+        return "redirect:employees";
+    }
+
+    @RequestMapping(value = "/removeemployee/{id}")
+    public String removeEmployee(@PathVariable(name = "id") Long id){
+
+        employeeService.removeEmployee(id);
+        return "redirect:employees";
     }
 
     @PostMapping(value = "addEmployee")
