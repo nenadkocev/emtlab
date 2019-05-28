@@ -37,6 +37,11 @@ public class HomeController {
         this.userService = userService;
     }
 
+    @RequestMapping(value = "/chatroom")
+    public String chatroom(){
+        return "sockets";
+    }
+
     @RequestMapping(value = "addEmployee")
     public String addEmployee(){
         return "employee/add";
