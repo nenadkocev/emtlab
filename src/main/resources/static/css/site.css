@@ -1,0 +1,26 @@
+li {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+
+.image-with-caption {
+    position:relative !important;
+}
+
+.image-with-caption h3 {
+    margin: 0;
+    position: absolute !important;
+    justify-content: center !important;
+    align-items: center !important;
+    background: rgba(59, 59, 59, 0.92) !important;
+    color: white !important;
+    bottom: 0 !important;
+    left: 15px !important;
+    right: 15px !important;
+    text-align: center !important;
+}
+
+.slika {
+    width: 100% !important;
+    height: auto !important;
+}

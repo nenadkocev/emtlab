@@ -8,6 +8,9 @@ import emt.fcse.laboratorisa.Model.User;
 import emt.fcse.laboratorisa.repository.UserRepository;
 import emt.fcse.laboratorisa.service.EmployeeService;
 import emt.fcse.laboratorisa.service.UserService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +27,7 @@ import java.util.Set;
 @Controller
 public class HomeController {
 
+    public static final int PAGE_SIZE = 20;
 
     private final EmployeeService employeeService;
     private final UserService userService;
@@ -52,7 +56,7 @@ public class HomeController {
     public String removeEmployee(@PathVariable(name = "id") Long id){
 
         employeeService.removeEmployee(id);
-        return "redirect:employees";
+        return "redirect:/employees";
     }
 
     @PostMapping(value = "addEmployee")
@@ -68,13 +72,19 @@ public class HomeController {
     }
 
     @RequestMapping(value = "employees")
-    public String employees(HttpServletRequest request, Model model, Authentication authentication){
+    public String employees(
+            @RequestParam(value = "page", required = false) Integer page,
+            HttpServletRequest request, Model model, Authentication authentication){
         if(!(request.isUserInRole("ROLE_ADMIN") || request.isUserInRole("ROLE_MANAGER")))
             throw new NotAuthorizedException();
 
+        if(page == null)
+            page = 0;
+        Pageable pageable = PageRequest.of(page, PAGE_SIZE);
+
         List<Employee> employeeList = request.isUserInRole("ROLE_ADMIN") ?
-                employeeService.getAll() :
-                employeeService.getAllEmployeesForManager(authentication.getName());
+                employeeService.getAll(pageable) :
+                employeeService.getAllEmployeesForManager(authentication.getName(), pageable);
 
         model.addAttribute("employees", employeeList);
 

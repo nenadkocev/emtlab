@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         String lastName = "Userl";
         String password = "password";
 
-        for(int i = 0; i < 20; i++){
+        for(int i = 0; i < 56; i++){
             UserDto dto = new UserDto();
             String firstNameDto = firstName + i;
             String lastNameDto = lastName + i;
@@ -114,6 +114,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             Role userRole = roleRepository.findByRole("ROLE_USER");
             Role employeeRole = roleRepository.findByRole("ROLE_EMPLOYEE");
             employee.addRole(userRole);
+            employee.addRole(roleManager);
             employee.addRole(employeeRole);
             employee.setManager(admin);
             employeeRepository.save(employee);

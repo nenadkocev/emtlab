@@ -9,6 +9,7 @@ import emt.fcse.laboratorisa.repository.EmployeeRepository;
 import emt.fcse.laboratorisa.repository.RoleRepository;
 import emt.fcse.laboratorisa.repository.UserRepository;
 import emt.fcse.laboratorisa.service.EmployeeService;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -34,6 +35,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public List<Employee> getAll(Pageable pageable){
+        return employeeRepository.getAll(pageable);
+    }
+
+    @Override
     public List<Employee> getAllEmployeesForManager(Employee employee) {
         return employeeRepository.getAllByManager_Id(employee.getId());
     }
@@ -41,6 +47,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> getAllEmployeesForManager(String managerEmail) {
         return employeeRepository.getAllByManager_Email(managerEmail);
+    }
+
+    @Override
+    public List<Employee> getAllEmployeesForManager(String managerEmail, Pageable pageable) {
+        return employeeRepository.getAllByManager_Email(managerEmail, pageable);
     }
 
     @Override
